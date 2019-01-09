@@ -66,23 +66,23 @@ func pipeSync(blocks []*block) ([]interface{}, []error) {
 	return ret, errs
 }
 
-type BondPipeliner struct {
+type ChuckedPipeliner struct {
 	blocks    []*block
 	synced    int32
 	bondCount int
 }
 
 func NewBondPipeliner(sizeBond int) Pipeliner {
-	return &BondPipeliner{bondCount: sizeBond}
+	return &ChuckedPipeliner{bondCount: sizeBond}
 }
 
-func (bp *BondPipeliner) Do(f func(...interface{}) (interface{}, error), args ...interface{}) {
+func (bp *ChuckedPipeliner) Do(f func(...interface{}) (interface{}, error), args ...interface{}) {
 	if atomic.LoadInt32(&bp.synced) == 0 {
 		bp.blocks = append(bp.blocks, &block{f, args})
 	}
 }
 
-func (bp *BondPipeliner) Sync() ([]interface{}, []error) {
+func (bp *ChuckedPipeliner) Sync() ([]interface{}, []error) {
 	if atomic.CompareAndSwapInt32(&bp.synced, 0, 1) {
 		var ret []interface{}
 		var errs []error
