@@ -1,7 +1,7 @@
 # go-patterns (active)
 一些go编码模式（持续更新）
 
-## future
+## [future](https://github.com/preytaren/go-patterns/blob/master/future/future.go)
 ### 场景
 在高并发场景下，可能存在大量重复的函数调用；无论是直接使用串行或并发执行，所有的调用都会被计算一次，导致调用的平均执行时间约等于单次调用时间；当单个调用很耗时时（如后端为db类存储，请求会被全部打到db），会严重影响系统的响应时间；实际上这些短时间内的重复调用只需要请求一次并把结果进行传递即可。
 ### 模式
@@ -37,7 +37,7 @@ wg.Wait()
 // 总计花费1s
 ```
 
-## pipeline
+## [pipeline](https://github.com/preytaren/go-patterns/blob/master/pipeline/pipeline.go)
 ### 场景
 
 ### 模式
@@ -62,7 +62,7 @@ func main() {
 }
 ```
 
-## config
+## [config](https://github.com/preytaren/go-patterns/blob/master/config/config.go)
 ### 场景
 使用config进行对象初始化。
 ### 模式
